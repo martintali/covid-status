@@ -1,6 +1,12 @@
 import axios from 'axios';
-import { FETCH_WORLD, FETCH_COUNTRIES, REFRESH_PAGE } from 'actions/types';
-import { FILTER_COUNTRY } from './types';
+import {
+  FILTER_COUNTRY,
+  FETCH_WORLD,
+  FETCH_COUNTRIES,
+  REFRESH_PAGE,
+} from 'actions/types';
+import ipgeolocation, { GEOLOCATION_DEFAULT_PARAMS } from 'apis/ipgeolocation';
+import { FETCH_LOCATION } from './types';
 
 export const fetchAll = () => async (dispatch) => {
   dispatch(refreshPage(true));
@@ -52,4 +58,27 @@ export const refreshPage = (isRefreshing = true) => {
     type: REFRESH_PAGE,
     payload: isRefreshing,
   };
+};
+
+export const fetchLocation = () => async (dispatch, getState) => {
+  let userLocation =
+    getState().userLocation ||
+    JSON.parse(localStorage.getItem('user_location'));
+
+  if (!userLocation) {
+    const response = await ipgeolocation.get(`/ipgeo`, {
+      params: {
+        apiKey: GEOLOCATION_DEFAULT_PARAMS.key,
+        fields: 'geo',
+      },
+    });
+
+    userLocation = response.data;
+    localStorage.setItem('user_location', JSON.stringify(userLocation));
+  }
+
+  dispatch({
+    type: FETCH_LOCATION,
+    payload: userLocation,
+  });
 };

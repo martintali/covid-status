@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchAll } from 'actions';
+import { fetchAll, fetchLocation } from 'actions';
 import Sidebar from 'components/Sidebar';
 import Table from 'components/Table';
 import Loading from 'components/Loading';
@@ -9,6 +9,7 @@ import Toolbar from './Toolbar';
 const Main = (props) => {
   useEffect(() => {
     props.fetchAll();
+    props.fetchLocation();
   }, []);
 
   return (
@@ -35,7 +36,8 @@ const Main = (props) => {
 const mapStateToProps = (state) => {
   return {
     isLoading: state.isLoading,
+    userLocation: state.userLocation
   };
 };
 
-export default connect(mapStateToProps, { fetchAll })(Main);
+export default connect(mapStateToProps, { fetchAll, fetchLocation })(Main);

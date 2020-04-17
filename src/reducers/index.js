@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import {
   FETCH_WORLD,
   FETCH_COUNTRIES,
+  FETCH_LOCATION,
   FILTER_COUNTRY,
   REFRESH_PAGE,
 } from 'actions/types';
@@ -36,7 +37,15 @@ const refreshPage = (prevState = true, action) => {
   return prevState;
 };
 
+const userLocation = (prevState = null, action) => {
+  if (action.type === FETCH_LOCATION) {
+    return action.payload;
+  }
+  return prevState;
+};
+
 export default combineReducers({
   cases: cases,
   isLoading: refreshPage,
+  userLocation: userLocation,
 });
