@@ -17,6 +17,14 @@ const useStyles = makeStyles({
   container: {
     maxHeight: 740,
   },
+  warning: {
+    backgroundColor: '#ff9800',
+    color: '#FFF',
+  },
+  danger: {
+    backgroundColor: '#f44336',
+    color: '#FFF',
+  },
 });
 
 const MyTable = ({ world, countries }) => {
@@ -45,7 +53,7 @@ const MyTable = ({ world, countries }) => {
     {
       id: 'cases',
       label: 'Cases',
-      minWidth: 140,
+      minWidth: 80,
     },
     {
       id: 'new-cases',
@@ -55,7 +63,7 @@ const MyTable = ({ world, countries }) => {
     {
       id: 'deaths',
       label: 'Deaths',
-      minWidth: 140,
+      minWidth: 80,
     },
     {
       id: 'new-deaths',
@@ -65,22 +73,22 @@ const MyTable = ({ world, countries }) => {
     {
       id: 'recovered',
       label: 'Recovered',
-      minWidth: 140,
+      minWidth: 80,
     },
     {
       id: 'active',
       label: 'Active',
-      minWidth: 140,
+      minWidth: 80,
     },
     {
       id: 'critical',
       label: 'Critical',
-      minWidth: 140,
+      minWidth: 80,
     },
     {
       id: 'tests',
       label: 'Test',
-      minWidth: 100,
+      minWidth: 80,
     },
   ];
 
@@ -102,13 +110,23 @@ const MyTable = ({ world, countries }) => {
 
   const tableBody = (
     <TableBody>
-      <TableRow hover role='checkbox' tabIndex={-1} key='world'>
+      <TableRow
+        hover
+        role='checkbox'
+        tabIndex={-1}
+        key='world'
+        style={{ backgroundColor: '#eceff1' }}
+      >
         <TableCell key='id'>#</TableCell>
         <TableCell scope='row'>World</TableCell>
         <TableCell>{formatNumber(world.cases)}</TableCell>
-        <TableCell>{formatWithPlus(world.todayCases)}</TableCell>
+        <TableCell className={`${world.todayCases ? classes.warning : ''}`}>
+          {formatWithPlus(world.todayCases)}
+        </TableCell>
         <TableCell>{formatNumber(world.deaths)}</TableCell>
-        <TableCell>{formatWithPlus(world.todayDeaths)}</TableCell>
+        <TableCell className={`${world.todayDeaths ? classes.danger : ''}`}>
+          {formatWithPlus(world.todayDeaths)}
+        </TableCell>
         <TableCell>{formatNumber(world.recovered)}</TableCell>
         <TableCell>{formatNumber(world.active)}</TableCell>
         <TableCell>{formatNumber(world.critical)}</TableCell>
@@ -142,11 +160,11 @@ const MyTable = ({ world, countries }) => {
               <img src={countryInfo.flag} alt='' width={18} /> {country}
             </TableCell>
             <TableCell>{formatNumber(cases)}</TableCell>
-            <TableCell className={`${todayCases ? 'bg-warning' : ''}`}>
+            <TableCell className={`${todayCases ? classes.warning : ''}`}>
               {formatWithPlus(todayCases)}
             </TableCell>
             <TableCell>{formatNumber(deaths)}</TableCell>
-            <TableCell className={`${todayDeaths ? 'bg-danger' : ''}`}>
+            <TableCell className={`${todayDeaths ? classes.danger : ''}`}>
               {formatWithPlus(todayDeaths)}
             </TableCell>
             <TableCell>{formatNumber(recovered)}</TableCell>
