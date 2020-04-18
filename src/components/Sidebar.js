@@ -1,40 +1,53 @@
 import React from 'react';
+import clsx from 'clsx';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import IconButton from '@material-ui/core/IconButton';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import useStyles from 'assets/styles';
 
-const Sidebar = ({ cases }) => {
+const Sidebar = ({ open, handleDrawerClose }) => {
+  const classes = useStyles();
   return (
-    <div>
-      <nav className='col-md-2 d-none d-md-block bg-secondary sidebar'>
-        <div className='sidebar-sticky'>
-          <ul className='nav flex-column'>
-            <li className='nav-item'>
-              <a className='nav-link active' href='/'>
-                <Icon icon={faHome} size='lg' /> Dashboard
-                <span className='sr-only'>(current)</span>
-              </a>
-            </li>
-          </ul>
+    <Drawer
+      variant='permanent'
+      classes={{
+        paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+      }}
+      open={open}
+    >
+      <div className={classes.toolbarIcon}>
+        <IconButton onClick={handleDrawerClose}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <Divider />
+      <List>
+        <div>
+          <ListItem button component={Link} to='/'>
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary='Dashboard' />
+          </ListItem>
         </div>
-
-        <div className='sidebar-bottom px-2'>
-          <p className='text-center text-light'>
-            {`Last update: ${new Date(cases.updated).toLocaleString()}`}
-          </p>
-
-          <p className='text-center text-light'>
-            {`Affected countries: ${cases.affectedCountries}`}
-          </p>
-        </div>
-      </nav>
-    </div>
+      </List>
+      <Divider />
+    </Drawer>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    cases: state.cases.global,
+    open: ownProps.open,
+    handleDrawerClose: ownProps.handleDrawerClose,
   };
 };
 

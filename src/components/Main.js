@@ -1,42 +1,56 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetchAll, fetchLocation } from 'actions';
-import Sidebar from 'components/Sidebar';
+import useStyles from 'assets/styles';
 import Table from 'components/Table';
-import Loading from 'components/Loading';
-import Toolbar from './Toolbar';
+
+function Copyright() {
+  return (
+    <Typography variant='body2' color='textSecondary' align='center'>
+      {'Copyright © '}
+      <Link color='inherit' href='https://material-ui.com/'>
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 const Main = (props) => {
+  const classes = useStyles();
+
   useEffect(() => {
     props.fetchAll();
     props.fetchLocation();
   }, []);
 
   return (
-    <div className='container-fluid bg-dark'>
-      {props.isLoading ? (
-        <Loading />
-      ) : (
-        <div className='row'>
-          <Sidebar />
-
-          <main
-            role='main'
-            className='col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-dark'
-          >
-            <Toolbar />
-            <Table />
-          </main>
-        </div>
-      )}
-    </div>
+    <main className={classes.content}>
+      <div className={classes.appBarSpacer} />
+      <Container maxWidth='lg' className={classes.container}>
+        <Backdrop open={props.isLoading}>
+          <CircularProgress />
+        </Backdrop>
+        {!props.isLoading ? <Table /> : ''}
+        <Box pt={4}>
+          <Copyright />
+        </Box>
+      </Container>
+    </main>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
     isLoading: state.isLoading,
-    userLocation: state.userLocation
+    userLocation: state.userLocation,
   };
 };
 

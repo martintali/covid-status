@@ -1,8 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
-const Table = ({ world, countries }) => {
+const useStyles = makeStyles({
+  root: {
+    width: '100%',
+  },
+  container: {
+    maxHeight: 740,
+  },
+});
+
+const MyTable = ({ world, countries }) => {
+  const classes = useStyles();
   const formatNumber = (value) => {
     if (value) {
       return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -13,69 +31,89 @@ const Table = ({ world, countries }) => {
   const formatWithPlus = (v) =>
     v > 0 ? `+${formatNumber(String(v))}` : formatNumber(String(v));
 
+  const columns = [
+    {
+      id: 'id',
+      label: '#',
+      minWidth: 40,
+    },
+    {
+      id: 'country',
+      label: 'Country',
+      minWidth: 100,
+    },
+    {
+      id: 'cases',
+      label: 'Cases',
+      minWidth: 140,
+    },
+    {
+      id: 'new-cases',
+      label: 'New cases',
+      minWidth: 80,
+    },
+    {
+      id: 'deaths',
+      label: 'Deaths',
+      minWidth: 140,
+    },
+    {
+      id: 'new-deaths',
+      label: 'New deaths',
+      minWidth: 80,
+    },
+    {
+      id: 'recovered',
+      label: 'Recovered',
+      minWidth: 140,
+    },
+    {
+      id: 'active',
+      label: 'Active',
+      minWidth: 140,
+    },
+    {
+      id: 'critical',
+      label: 'Critical',
+      minWidth: 140,
+    },
+    {
+      id: 'tests',
+      label: 'Test',
+      minWidth: 100,
+    },
+  ];
+
   const tableHead = (
-    <thead className='thead-dark'>
-      <tr>
-        <th scope='col' title='Position'>
-          #
-        </th>
-        <th scope='col' title='Other, Country'>
-          Other, Country
-        </th>
-        <th scope='col' title='Cases'>
-          Cases
-        </th>
-        <th scope='col' title='New Cases'>
-          New Cases
-        </th>
-        <th scope='col' title='Deaths'>
-          Deaths
-        </th>
-        <th scope='col' title='New Deaths'>
-          New Deaths
-        </th>
-        <th scope='col' title='Recovered'>
-          Recovered
-        </th>
-        <th scope='col' title='Active'>
-          Active
-        </th>
-        <th scope='col' title='Critical'>
-          Critical
-        </th>
-        <th scope='col' title='Cases Per One Million'>
-          Cases /1M pop
-        </th>
-        <th scope='col' title='Deaths Per One Million'>
-          Deaths /1M pop
-        </th>
-        <th scope='col' title='Tests'>
-          Tests
-        </th>
-        <th scope='col' title='Tests Per One Million'>
-          Tests /1M pop
-        </th>
-      </tr>
-    </thead>
+    <TableHead>
+      <TableRow>
+        {columns.map((column) => (
+          <TableCell
+            key={column.id}
+            align={column.align}
+            style={{ minWidth: column.minWidth }}
+          >
+            {column.label}
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
   );
 
   const tableBody = (
-    <tbody>
-      <tr className='table-dark font-weight-bold'>
-        <td />
-        <th scope='row'>World</th>
-        <td>{formatNumber(world.cases)}</td>
-        <td>{formatWithPlus(world.todayCases)}</td>
-        <td>{formatNumber(world.deaths)}</td>
-        <td>{formatWithPlus(world.todayDeaths)}</td>
-        <td>{formatNumber(world.recovered)}</td>
-        <td>{formatNumber(world.active)}</td>
-        <td>{formatNumber(world.critical)}</td>
-        <td>{formatNumber(world.casesPerOneMillion)}</td>
-        <td>{formatNumber(world.deathsPerOneMillion)}</td>
-        <td>{formatNumber(world.tests)}</td>
-        <td>{formatNumber(world.testsPerOneMillion)}</td>
-      </tr>
+    <TableBody>
+      <TableRow hover role='checkbox' tabIndex={-1} key='world'>
+        <TableCell key='id'>#</TableCell>
+        <TableCell scope='row'>World</TableCell>
+        <TableCell>{formatNumber(world.cases)}</TableCell>
+        <TableCell>{formatWithPlus(world.todayCases)}</TableCell>
+        <TableCell>{formatNumber(world.deaths)}</TableCell>
+        <TableCell>{formatWithPlus(world.todayDeaths)}</TableCell>
+        <TableCell>{formatNumber(world.recovered)}</TableCell>
+        <TableCell>{formatNumber(world.active)}</TableCell>
+        <TableCell>{formatNumber(world.critical)}</TableCell>
+        <TableCell>{formatNumber(world.tests)}</TableCell>
+      </TableRow>
 
       {countries.map(
         (
@@ -88,62 +126,48 @@ const Table = ({ world, countries }) => {
             recovered,
             active,
             critical,
-            casesPerOneMillion,
-            deathsPerOneMillion,
             countryInfo,
             tests,
-            testsPerOneMillion,
           },
           idx
         ) => (
-          <tr
+          <TableRow
             key={shortid.generate()}
             className={`font-weight-bold ${
               cases === recovered ? 'table-success text-dark' : ''
             }`}
           >
-            <th scope='row'>{idx + 1}</th>
-            <td className='align-middle'>
+            <TableCell scope='row'>{idx + 1}</TableCell>
+            <TableCell className='align-middle'>
               <img src={countryInfo.flag} alt='' width={18} /> {country}
-            </td>
-            <td>{formatNumber(cases)}</td>
-            <td className={`${todayCases ? 'bg-warning' : ''}`}>
+            </TableCell>
+            <TableCell>{formatNumber(cases)}</TableCell>
+            <TableCell className={`${todayCases ? 'bg-warning' : ''}`}>
               {formatWithPlus(todayCases)}
-            </td>
-            <td>{formatNumber(deaths)}</td>
-            <td className={`${todayDeaths ? 'bg-danger' : ''}`}>
+            </TableCell>
+            <TableCell>{formatNumber(deaths)}</TableCell>
+            <TableCell className={`${todayDeaths ? 'bg-danger' : ''}`}>
               {formatWithPlus(todayDeaths)}
-            </td>
-            <td>{formatNumber(recovered)}</td>
-            <td>{formatNumber(active)}</td>
-            <td>{formatNumber(critical)}</td>
-            <td>{formatNumber(casesPerOneMillion)}</td>
-            <td>{formatNumber(deathsPerOneMillion)}</td>
-            <td>{formatNumber(tests)}</td>
-            <td>{formatNumber(testsPerOneMillion)}</td>
-          </tr>
+            </TableCell>
+            <TableCell>{formatNumber(recovered)}</TableCell>
+            <TableCell>{formatNumber(active)}</TableCell>
+            <TableCell>{formatNumber(critical)}</TableCell>
+            <TableCell>{formatNumber(tests)}</TableCell>
+          </TableRow>
         )
       )}
-    </tbody>
+    </TableBody>
   );
 
   return (
-    <div className='table-responsive'>
-      <table className='table table-dark table-hover'>
-        {tableHead}
-        {tableBody}
-      </table>
-
-      <p className='text-left text-light'>
-        <mark className='table-success'>Highlighted in green</mark> = all cases
-        have recovered from the infection
-      </p>
-
-      <p className='text-left text-light'>
-        <mark className='table-secondary'>Highlighted in grey</mark> = all cases
-        have had an outcome (there are no active cases)
-      </p>
-    </div>
+    <Paper className={classes.root}>
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label='sticky table'>
+          {tableHead}
+          {tableBody}
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 };
 
@@ -154,4 +178,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps)(MyTable);
