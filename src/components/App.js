@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import MUICookieConsent from 'material-ui-cookie-consent';
 import useStyles from 'assets/styles';
 import Sidebar from 'components/Sidebar';
 import Main from 'components/Main';
@@ -59,6 +60,10 @@ export default function App() {
           <Route path='/' exact component={Main} />
         </Switch>
       </BrowserRouter>
+      <MUICookieConsent
+        cookieName='mySiteCookieConsent'
+        message='This website uses cookies to enhance the user experience.'
+      />
     </div>
   );
 }
