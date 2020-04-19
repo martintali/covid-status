@@ -8,7 +8,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import SyncIcon from '@material-ui/icons/Sync';
 import IconButton from '@material-ui/core/IconButton';
-import { fetchAll, fetchLocation } from 'actions';
+import TextField from '@material-ui/core/TextField';
+import { fetchAll, fetchLocation, filterCountry } from 'actions';
 import useStyles from 'assets/styles';
 import Table from 'components/Table';
 
@@ -41,10 +42,20 @@ const Main = (props) => {
       </Backdrop>
       {!props.isLoading ? (
         <Container maxWidth='lg' className={classes.container}>
-          <Box>
-            <IconButton onClick={() => props.fetchAll()}>
-              <SyncIcon color='primary' />
-            </IconButton>
+          <Box pb={2} display='flex' alignItems='center'>
+            <Box flexGrow={1}>
+              <TextField
+                fullWidth
+                id='standard-basic'
+                label='Filter by country name'
+                onChange={(e) => props.filterCountry(e.target.value)}
+              />
+            </Box>
+            <Box>
+              <IconButton onClick={() => props.fetchAll()}>
+                <SyncIcon color='primary' />
+              </IconButton>
+            </Box>
           </Box>
           <Table />
 
@@ -66,4 +77,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchAll, fetchLocation })(Main);
+export default connect(mapStateToProps, {
+  fetchAll,
+  fetchLocation,
+  filterCountry,
+})(Main);

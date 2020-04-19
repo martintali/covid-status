@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-const MyTable = ({ world, countries }) => {
+const MyTable = ({ world, countries, orderCountries }) => {
   const classes = useStyles();
   const formatNumber = (value) => {
     if (value) {
@@ -56,7 +56,7 @@ const MyTable = ({ world, countries }) => {
       minWidth: 80,
     },
     {
-      id: 'new-cases',
+      id: 'todayCases',
       label: 'New cases',
       minWidth: 80,
     },
@@ -66,7 +66,7 @@ const MyTable = ({ world, countries }) => {
       minWidth: 80,
     },
     {
-      id: 'new-deaths',
+      id: 'todayDeaths',
       label: 'New deaths',
       minWidth: 80,
     },
@@ -192,7 +192,7 @@ const MyTable = ({ world, countries }) => {
 const mapStateToProps = (state) => {
   return {
     world: state.cases.global,
-    countries: state.cases.filteredCountries,
+    countries: [...state.cases.filteredCountries],
   };
 };
 
