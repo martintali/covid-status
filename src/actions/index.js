@@ -28,13 +28,15 @@ export const fetchWorld = () => async (dispatch) => {
   });
 };
 
-export const fetchCountries = () => async (dispatch) => {
+export const fetchCountries = (alone = false) => async (dispatch) => {
   const response = await axios.get('https://corona.lmao.ninja/v2/countries');
 
   dispatch({
     type: FETCH_COUNTRIES,
     payload: response.data.sort((a, b) => b.cases - a.cases),
   });
+
+  if (alone) dispatch(refreshPage(false));
 };
 
 export const filterCountry = (searchTerm) => (dispatch, getState) => {

@@ -32,7 +32,7 @@ const Main = (props) => {
   useEffect(() => {
     props.fetchAll();
     props.fetchLocation();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <main className={classes.content}>

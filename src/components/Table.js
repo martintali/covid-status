@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { countryToFlag } from 'helpers/countryFlags';
 
 const useStyles = makeStyles({
   root: {
@@ -157,7 +158,7 @@ const MyTable = ({ world, countries, orderCountries }) => {
           >
             <TableCell scope='row'>{idx + 1}</TableCell>
             <TableCell className='align-middle'>
-              <img src={countryInfo.flag} alt='' width={18} /> {country}
+              {countryToFlag(countryInfo.iso2)} {country}
             </TableCell>
             <TableCell>{formatNumber(cases)}</TableCell>
             <TableCell className={`${todayCases ? classes.warning : ''}`}>

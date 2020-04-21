@@ -11,6 +11,7 @@ import MUICookieConsent from 'material-ui-cookie-consent';
 import useStyles from 'assets/styles';
 import Sidebar from 'components/Sidebar';
 import Main from 'components/Main';
+import Country from 'components/Country';
 
 export default function App() {
   const classes = useStyles();
@@ -58,6 +59,7 @@ export default function App() {
 
         <Switch>
           <Route path='/' exact component={Main} />
+          <Route path='/country' exact component={Country} />
         </Switch>
       </BrowserRouter>
       <MUICookieConsent

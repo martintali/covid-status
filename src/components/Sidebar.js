@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import LanguageIcon from '@material-ui/icons/Language';
 import useStyles from 'assets/styles';
 
 const Sidebar = ({ open, handleDrawerClose }) => {
@@ -30,14 +31,18 @@ const Sidebar = ({ open, handleDrawerClose }) => {
       </div>
       <Divider />
       <List>
-        <div>
-          <ListItem button component={Link} to='/'>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary='Dashboard' />
-          </ListItem>
-        </div>
+        <ListItem button component={Link} to='/'>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary='Dashboard' />
+        </ListItem>
+        <ListItem button component={Link} to='/country'>
+          <ListItemIcon>
+            <LanguageIcon />
+          </ListItemIcon>
+          <ListItemText primary='Country' />
+        </ListItem>
       </List>
       <Divider />
     </Drawer>
