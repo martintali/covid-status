@@ -4,6 +4,7 @@ import {
   FETCH_WORLD,
   FETCH_COUNTRIES,
   REFRESH_PAGE,
+  FETCH_COUNTRY,
 } from 'actions/types';
 import ipgeolocation, { GEOLOCATION_DEFAULT_PARAMS } from 'apis/ipgeolocation';
 import { FETCH_LOCATION } from './types';
@@ -83,4 +84,24 @@ export const fetchLocation = () => async (dispatch, getState) => {
     type: FETCH_LOCATION,
     payload: userLocation,
   });
+};
+
+export const fetchCountry = (countryName) => async (dispatch) => {
+  if (countryName) {
+    const response = await axios.get(
+      `https://corona.lmao.ninja/v2/historical/${countryName}?lastday=30`
+    );
+
+    dispatch({
+      type: FETCH_COUNTRY,
+      payload: response.data,
+    });
+
+    dispatch(refreshPage(false));
+  } else {
+    dispatch({
+      type: FETCH_COUNTRY,
+      payload: null,
+    });
+  }
 };

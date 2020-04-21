@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import {
   FETCH_WORLD,
   FETCH_COUNTRIES,
+  FETCH_COUNTRY,
   FETCH_LOCATION,
   FILTER_COUNTRY,
   REFRESH_PAGE,
@@ -11,6 +12,7 @@ const INITAL_FETCH_VALUES = {
   global: {},
   countries: [],
   filteredCountries: [],
+  country: null,
 };
 
 const cases = (prevState = INITAL_FETCH_VALUES, action) => {
@@ -23,6 +25,8 @@ const cases = (prevState = INITAL_FETCH_VALUES, action) => {
         countries: action.payload,
         filteredCountries: action.payload,
       };
+    case FETCH_COUNTRY:
+      return { ...prevState, country: action.payload };
     case FILTER_COUNTRY:
       return { ...prevState, filteredCountries: action.payload };
     default:
