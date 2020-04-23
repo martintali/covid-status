@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -37,9 +38,15 @@ const Sidebar = ({ open, handleDrawerClose }) => {
           </ListItemIcon>
           <ListItemText primary='Dashboard' />
         </ListItem>
-        <ListItem button component={Link} to='/country'>
+        <ListItem button component={Link} to='/world'>
           <ListItemIcon>
             <LanguageIcon />
+          </ListItemIcon>
+          <ListItemText primary='World cases' />
+        </ListItem>
+        <ListItem button component={Link} to='/country'>
+          <ListItemIcon>
+            <SearchIcon />
           </ListItemIcon>
           <ListItemText primary='Country' />
         </ListItem>

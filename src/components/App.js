@@ -10,8 +10,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MUICookieConsent from 'material-ui-cookie-consent';
 import useStyles from 'assets/styles';
 import Sidebar from 'components/Sidebar';
-import Main from 'components/Main';
+import Home from 'components/Home';
 import Country from 'components/Country';
+import WorldTable from 'components/WorldTable';
 
 export default function App() {
   const classes = useStyles();
@@ -58,7 +59,8 @@ export default function App() {
         <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
 
         <Switch>
-          <Route path='/' exact component={Main} />
+          <Route path='/' exact component={Home} />
+          <Route path='/world' exact component={WorldTable} />
           <Route path='/country' exact component={Country} />
         </Switch>
       </BrowserRouter>
