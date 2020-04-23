@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -179,14 +178,12 @@ const MyTable = ({ world, countries, orderCountries }) => {
   );
 
   return (
-    <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label='sticky table'>
-          {tableHead}
-          {tableBody}
-        </Table>
-      </TableContainer>
-    </Paper>
+    <TableContainer className={classes.container}>
+      <Table stickyHeader aria-label='sticky table' size='small'>
+        {tableHead}
+        {tableBody}
+      </Table>
+    </TableContainer>
   );
 };
 

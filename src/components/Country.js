@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { ResponsiveLine } from '@nivo/line';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -13,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import * as actions from 'actions';
 import useStyles from 'assets/styles';
 import { countryToFlag } from 'helpers/countryFlags';
+import Chart from 'components/Chart';
 
 const useStylesInternal = makeStyles({
   option: {
@@ -91,77 +91,6 @@ const Country = (props) => {
     data = [];
   }
 
-  const Chart = () => {
-    return (
-      <ResponsiveLine
-        data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: 'point' }}
-        yScale={{
-          type: 'linear',
-          min: 'auto',
-          max: 'auto',
-          stacked: true,
-          reverse: false,
-        }}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          orient: 'bottom',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'number',
-          legendOffset: 36,
-          legendPosition: 'middle',
-        }}
-        axisLeft={{
-          orient: 'left',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'count',
-          legendOffset: -55,
-          legendPosition: 'middle',
-        }}
-        colors={{ scheme: 'nivo' }}
-        pointSize={10}
-        pointColor={{ theme: 'background' }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: 'serieColor' }}
-        pointLabel='y'
-        pointLabelYOffset={-12}
-        useMesh={true}
-        legends={[
-          {
-            anchor: 'bottom-right',
-            direction: 'column',
-            justify: false,
-            translateX: 100,
-            translateY: 0,
-            itemsSpacing: 0,
-            itemDirection: 'left-to-right',
-            itemWidth: 80,
-            itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 12,
-            symbolShape: 'circle',
-            symbolBorderColor: 'rgba(0, 0, 0, .5)',
-            effects: [
-              {
-                on: 'hover',
-                style: {
-                  itemBackground: 'rgba(0, 0, 0, .03)',
-                  itemOpacity: 1,
-                },
-              },
-            ],
-          },
-        ]}
-      />
-    );
-  };
-
   return (
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
@@ -208,22 +137,29 @@ const Country = (props) => {
             <CircularProgress />
           </Backdrop>
           {!props.isLoading ? (
-            <Grid item xs={12}>
-              <Paper className={classes.root} elevation={2}>
-                {country ? (
-                  <Box
-                    m={2}
-                    display='flex'
-                    alignItems='center'
-                    height={600}
-                    width={1400}
-                  >
-                    {Chart({ data })}
-                  </Box>
-                ) : (
-                  ''
-                )}
-              </Paper>
+            <Grid container>
+              <Grid item xs={7}>
+                <Paper className={classes.root} elevation={2}>
+                  {country ? (
+                    <Box
+                      m={2}
+                      display='flex'
+                      alignItems='center'
+                      height={600}
+                      width={1400}
+                    >
+                      <Chart data={data} />
+                    </Box>
+                  ) : (
+                    ''
+                  )}
+                </Paper>
+              </Grid>
+              <Grid item xs={5}>
+                <Paper className={classes.root} elevation={2}>
+                  Larala
+                </Paper>
+              </Grid>
             </Grid>
           ) : (
             ''
