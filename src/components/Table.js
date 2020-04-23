@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-const MyTable = ({ world, countries, orderCountries }) => {
+const MyTable = ({ world, countries, trim }) => {
   const classes = useStyles();
   const formatNumber = (value) => {
     if (value) {
@@ -108,6 +108,8 @@ const MyTable = ({ world, countries, orderCountries }) => {
     </TableHead>
   );
 
+  const countriesToShow = trim ? countries.slice(0, 5) : countries;
+
   const tableBody = (
     <TableBody>
       <TableRow
@@ -133,7 +135,7 @@ const MyTable = ({ world, countries, orderCountries }) => {
         <TableCell>{formatNumber(world.tests)}</TableCell>
       </TableRow>
 
-      {countries.map(
+      {countriesToShow.map(
         (
           {
             country,

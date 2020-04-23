@@ -80,6 +80,6 @@ export default makeStyles((theme) => ({
     height: 240,
   },
   fixedTableHeight: {
-    height: 440,
+    height: 340,
   },
 }));

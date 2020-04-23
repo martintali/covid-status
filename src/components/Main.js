@@ -38,32 +38,17 @@ const Main = (props) => {
     props.fetchLocation();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  let data = [
-    // {
-    //   id: 'deaths',
-    //   color: 'red',
-    //   data: [],
-    // },
-    {
-      id: 'cases',
-      color: 'teal',
-      data: [],
-    },
-    // {
-    //   id: 'recovered',
-    //   color: 'blue',
-    //   data: [],
-    // },
-  ];
+  let data = [];
   let dataTicks = [];
   let dataYTicks = [];
   if (props.historical) {
-    // Object.keys(props.historical.deaths).forEach((key) => {
-    //   data[0].data.push({
-    //     x: key.toString(),
-    //     y: props.historical.deaths[key].toString(),
-    //   });
-    // });
+    data = [
+      {
+        id: 'cases',
+        color: 'teal',
+        data: [],
+      },
+    ];
     Object.keys(props.historical.cases).forEach((key, idx) => {
       if (idx % 5 === 0) {
         dataTicks.push(key.toString());
@@ -74,14 +59,6 @@ const Main = (props) => {
         y: props.historical.cases[key].toString(),
       });
     });
-    // Object.keys(props.historical.recovered).forEach((key) => {
-    //   data[2].data.push({
-    //     x: key.toString(),
-    //     y: props.historical.recovered[key].toString(),
-    //   });
-    // });
-  } else {
-    data = [];
   }
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -167,7 +144,16 @@ const Main = (props) => {
                 >
                   Cases
                 </Typography>
-                <Table />
+                <Table trim />
+                <Box className={classes.seeMore} pt={2}>
+                  <Link
+                    color='primary'
+                    href='#'
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    See more cases
+                  </Link>
+                </Box>
               </Paper>
             </Grid>
           </Grid>
