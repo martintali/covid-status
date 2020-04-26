@@ -13,6 +13,7 @@ import { fetchAll, fetchLocation, filterCountry } from 'actions';
 import useStyles from 'assets/styles';
 import Table from 'components/Table';
 import Chart from 'components/Chart';
+import { formatNumber, formatWithPlus } from 'helpers/numbers';
 
 function Copyright() {
   return (
@@ -92,7 +93,7 @@ const Home = (props) => {
                     Today Cases
                   </Typography>
                   <Typography component='p' variant='h4'>
-                    {props.world.todayCases}
+                    {formatWithPlus(props.world.todayCases)}
                   </Typography>
                   <Typography
                     component='h2'
@@ -103,7 +104,7 @@ const Home = (props) => {
                     Total Cases
                   </Typography>
                   <Typography component='p' variant='h4'>
-                    {props.world.cases}
+                    {formatNumber(props.world.cases)}
                   </Typography>
                   <Typography
                     color='textSecondary'

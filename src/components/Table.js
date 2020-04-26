@@ -9,6 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { countryToFlag } from 'helpers/countryFlags';
+import { formatNumber, formatWithPlus } from 'helpers/numbers';
 
 const useStyles = makeStyles({
   root: {
@@ -29,15 +30,6 @@ const useStyles = makeStyles({
 
 const MyTable = ({ world, countries, trim }) => {
   const classes = useStyles();
-  const formatNumber = (value) => {
-    if (value) {
-      return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    }
-    return '—';
-  };
-
-  const formatWithPlus = (v) =>
-    v > 0 ? `+${formatNumber(String(v))}` : formatNumber(String(v));
 
   const columns = [
     {
